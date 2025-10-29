@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mridugandha — Order</title>
+<style>
+  :root{
+    --bg:#f9f7f1;
+    --accent:#a0522d;
+    --text:#6b4226;
+    --muted:#a3866b;
+    --card:#fffaf3;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  header{
+    padding:20px;
+    text-align:center;
+    border-bottom:1px solid #e7dfd4;
+  }
+  header h1{margin:0;font-size:1.8rem;color:var(--accent)}
+  header p{margin:6px 0 0;font-size:0.95rem;color:var(--muted)}
+
+  .container{
+    padding:16px;
+    max-width:720px;
+    margin:18px auto;
+  }
+
+  .product-card{
+    background:var(--card);
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  }
+
+  .media{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .media img{
+    width:140px;
+    height:140px;
+    object-fit:cover;
+    border-radius:10px;
+    border:1px solid #ecdccf;
+    background:#fff;
+  }
+
+  .info{
+    flex:1;
+    min-width:200px;
+  }
+
+  .info h2{margin:0 0 6px;font-size:1.25rem}
+  .tag{font-style:italic;color:var(--muted);margin-bottom:8px}
+  .price-big{font-weight:700;font-size:1.2rem;color:var(--accent);margin-top:6px}
+
+  .selectors{
+    margin-top:14px;
+    display:grid;
+    gap:10px;
+  }
+
+  label.small{font-size:0.95rem;margin-bottom:6px;display:block;color:var(--text)}
+  select, input[type="number"], .size-list{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #e2d6cb;
+    background:white;
+    font-size:1rem;
+    color:var(--text);
+  }
+
+  .size-list{
+    display:flex;
+    gap:8px;
+    padding:6px;
+  }
+  .size-item{
+    flex:1;
+    text-align:center;
+    padding:8px 6px;
+    border-radius:8px;
+    border:1px solid #e2d6cb;
+    cursor:pointer;
+    background:transparent;
+    user-select:none;
+  }
+  .size-item.active{
+    background:var(--accent);
+    color:white;
+    border-color:var(--accent);
+    font-weight:600;
+  }
+
+  .qty-row{display:flex;gap:8px;align-items:center}
+  .qty-row input[type="number"]{width:110px}
+
+  .total{
+    margin-top:12px;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--text);
+  }
+
+  .order-actions{
+    margin-top:16px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    flex:1;
+    text-align:center;
+    padding:12px 14px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+    cursor:pointer;
+    border:0;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:white;
+  }
+  .btn-secondary{
+    background:#fff;
+    border:1px solid #e2d6cb;
+    color:var(--text);
+  }
+
+  .form-mini{
+    margin-top:12px;
+    display:grid;
+    gap:8px;
+  }
+  input[type="text"], textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #e2d6cb;
+    font-size:0.95rem;
+  }
+  textarea{min-height:70px;resize:vertical}
+
+  footer{
+    text-align:center;
+    margin-top:18px;
+    padding:12px;
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+
+  /* Responsive */
+  @media (max-width:520px){
+    .media img{width:120px;height:120px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>मृदुगंधा — Handmade Soap</h1>
+  <p>निसर्गतेचा कोमल सुगंध · 100% नैसर्गिक</p>
+</header>
+
+<div class="container">
+  <div class="product-card">
+    <div class="media">
+      <img id="productImage" src="https://via.placeholder.com/400x400.png?text=Mridugandha" alt="Mridugandha Soap">
+      <div class="info">
+        <h2 id="productName">Mridugandha — Handmade Soap</h2>
+        <div class="tag">चंदन · अ‍ॅलोवेरा · हळद</div>
+        <div class="price-big">Base price: <span id="basePrice">₹120</span></div>
+
+        <div class="selectors">
+          <div>
+            <label class="small">फ्लेवर निवडा</label>
+            <select id="flavorSelect" aria-label="Flavor">
+              <option value="Chandan">Chandan (चंदन)</option>
+              <option value="Aloe Vera">Aloe Vera (अ‍ॅलोवेरा)</option>
+              <option value="Turmeric">Turmeric (हळद)</option>
+              <option value="Rose">Rose (गुलाब)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="small">साईझ (वजन)</label>
+            <div class="size-list" id="sizeList">
+              <div class="size-item active" data-size="100" data-price="120">100g — ₹120</div>
+              <div class="size-item" data-size="50" data-price="70">50g — ₹70</div>
+            </div>
+          </div>
+
+          <div>
+            <label class="small">प्रमाण (Quantity)</label>
+            <div class="qty-row">
+              <input type="number" id="qty" min="1" value="1" />
+              <button class="btn btn-secondary" id="incQty" type="button">+1</button>
+              <button class="btn btn-secondary" id="decQty" type="button">-1</button>
+            </div>
+          </div>
+
+          <div class="form-mini">
+            <label class="small">तुमचं नाव (ऑप्शनल)</label>
+            <input type="text" id="custName" placeholder="उदा. राम राम" />
+
+            <label class="small">पत्ता / नोट (ऑप्शनल)</label>
+            <textarea id="custNote" placeholder="डिलिव्हरी पत्ता किंवा इतर सूचना"></textarea>
+          </div>
+
+          <div class="total" id="totalText">Total: ₹120</div>
+
+          <div class="order-actions">
+            <button class="btn btn-primary" id="buyNow">🛒 Buy Now (WhatsApp)</button>
+            <button class="btn btn-secondary" id="previewMsg">📩 Preview Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Weight options: 50g / 100g · Price adjustable in script · Replace WhatsApp number before publishing.
+  </footer>
+</div>
+
+<script>
+  // CONFIG: बदलायचे ठिकाण
+  const WHATSAPP_NUMBER = "+918888888888"; // <-- येथे तुमचा नंबर टाका (country code सह, उदा. +91XXXXXXXXXX)
+  const PRODUCT_TITLE = "Mridugandha Handmade Soap";
+
+  // Elements
+  const sizeList = document.getElementById('sizeList');
+  const sizeItems = Array.from(document.querySelectorAll('.size-item'));
+  const qtyInput = document.getElementById('qty');
+  const incBtn = document.getElementById('incQty');
+  const decBtn = document.getElementById('decQty');
+  const flavorSelect = document.getElementById('flavorSelect');
+  const totalText = document.getElementById('totalText');
+  const basePriceSpan = document.getElementById('basePrice');
+  const buyNowBtn = document.getElementById('buyNow');
+  const previewBtn = document.getElementById('previewMsg');
+  const custName = document.getElementById('custName');
+  const custNote = document.getElementById('custNote');
+
+  // initial values
+  let selectedSize = 100;
+  let selectedPrice = 120;
+
+  // helpers
+  function formatINR(n){
+    return "₹" + n.toFixed(0);
+  }
+
+  function updateSelectedSize(el){
+    sizeItems.forEach(i=>i.classList.remove('active'));
+    el.classList.add('active');
+    selectedSize = parseInt(el.getAttribute('data-size'), 10);
+    selectedPrice = parseFloat(el.getAttribute('data-price'));
+    basePriceSpan.textContent = formatINR(selectedPrice);
+    updateTotal();
+  }
+
+  function updateTotal(){
+    const qty = Math.max(1, parseInt(qtyInput.value || "1", 10));
+    const total = Math.round(selectedPrice * qty);
+    totalText.textContent = "Total: " + formatINR(total);
+  }
+
+  // attach events
+  sizeItems.forEach(item=>{
+    item.addEventListener('click', ()=> updateSelectedSize(item));
+  });
+
+  incBtn.addEventListener('click', ()=>{
+    qtyInput.value = Math.max(1, parseInt(qtyInput.value||"1",10)) + 1;
+    updateTotal();
+  });
+  decBtn.addEventListener('click', ()=>{
+    let v = Math.max(1, parseInt(qtyInput.value||"1",10) - 1);
+    qtyInput.value = v;
+    updateTotal();
+  });
+
+  qtyInput.addEventListener('input', ()=>{
+    if(!qtyInput.value || parseInt(qtyInput.value) < 1) qtyInput.value = 1;
+    updateTotal();
+  });
+
+  // build message
+  function buildMessage(){
+    const flavor = flavorSelect.value;
+    const qty = Math.max(1, parseInt(qtyInput.value||"1",10));
+    const total = Math.round(selectedPrice * qty);
+    const name = custName.value.trim();
+    const note = custNote.value.trim();
+
+    let msg = `नमस्कार,%0A मला ${PRODUCT_TITLE} ऑर्डर करायचा आहे.%0A%0A`;
+    msg += `प्रॉडक्ट: ${PRODUCT_TITLE}%0A`;
+    msg += `फ्लेवर: ${flavor}%0A`;
+    msg += `साईझ: ${selectedSize}g%0A`;
+    msg += `प्रमाण: ${qty}%0A`;
+    msg += `किंमत: ${formatINR(selectedPrice)} each%0A`;
+    msg += `एकूण: ${formatINR(total)}%0A%0A`;
+    if(name) msg += `नाव: ${encodeURIComponent(name)}%0A`;
+    if(note) msg += `नोट: ${encodeURIComponent(note)}%0A`;
+    msg += `%0Aकृपया ऑर्डर कन्फर्म करा.`;
+
+    return msg;
+  }
+
+  // open WhatsApp
+  buyNowBtn.addEventListener('click', ()=>{
+    const msg = buildMessage();
+    // wa.me link
+    const url = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g,'')}?text=${msg}`;
+    window.open(url, '_blank');
+  });
+
+  // preview
+  previewBtn.addEventListener('click', ()=>{
+    const raw = decodeURIComponent(buildMessage());
+    alert("Preview message:\n\n" + raw.replace(/%0A/g,"\n"));
+  });
+
+  // init
+  // set default by triggering first active
+  const initialActive = document.querySelector('.size-item.active');
+  if(initialActive) updateSelectedSize(initialActive);
+  else updateTotal();
+</script>
+
+</body>
+</html>
